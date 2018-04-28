@@ -9,6 +9,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        input {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            border: 1px solid transparent;
+            font-size: 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            border-color: #17a2b8;
+            line-height: 1rem;
+            padding: 0.125rem 0.75rem;
+            background-color: white;
+            width: 201.2px;
+            height: 27.6px;
+        }
+    </style>
 </head>
 <body style="font-family:Microsoft JhengHei;background-color:#F5F5BC">
     <div style="height:100vh;width:50vw;position:absolute;left:0%;">
@@ -18,11 +37,40 @@
             <h4 style="text-align:center;">一個免費的教學平台</h4>
         </div>
     </div>
-    <div style="height:100vh;width:50vw;position:absolute;right:0%;">
-
-    </div>
+    <center style="height:100vh;width:50vw;position:absolute;right:0%;">
+        <h5 style="text-align:center;margin-top:30vh;">登入</h5>
+        <br>
+        帳號 or 學校編號
+        <input type="text" id="name" onkeypress="if(event.which/1==13){$('#password').focus();}">
+        <br>
+        <br>
+        密碼
+        <input type="password" id="password" placeholder="密碼" onkeypress="if(event.which/1==13){login();}">
+        <br>
+        <br>
+        <button class="btn btn-info btn-lg btn-block" onclick="login();">登入</button>
+        <hr>
+        尚未註冊入學? <a href="/register">註冊</a>
+    </center>
     <script>
-        
+        function login(){
+            $.ajax({
+                type:"POST",
+                url:"/login",
+                data:{"name":$("#name").val(),"password":$("#password").val()},
+                success:function(response){
+                    location.reload();
+                },
+                error:function(jqxhr,status,exception){
+                    $("input").val("");
+                    swal({
+                        text:"帳號或名稱錯誤!!",
+                        icon:"error",
+                        buttons:"確定"
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
