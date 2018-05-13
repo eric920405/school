@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const md5 = require("md5");
+const fs = require("fs");
 const low = require("lowdb");
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
@@ -29,9 +30,22 @@ const checkCode = function(a){
 
 app.get("/",function(req,res){
     if(req.session.user){
-        res.redirect(302,"/main");
+        res.status(200).sendFile(__dirname + "/main/main.html");
     }else{
         res.status(200).sendFile(__dirname + "/main/welcome.html");
+    }
+});
+
+app.get("/data-class",(req,res) => {
+    if(req.session.user){
+        var data = db.get("users").find({number:req.session.user.number}).value().class;
+        if(data.length==0){
+            res.sendStatus(404);
+        }else{
+            res.status(200).send(data);
+        }
+    }else{
+        res.sendStatus(400);
     }
 });
 
@@ -75,13 +89,17 @@ app.post("/create-account",function(req,res){
         if(wrong.name||wrong.password){
             res.status(400).send(wrong);
         }else{
-            db.get("users").push({name:req.body.name,password:md5(req.body.password),number:checkCode(serverData.value().number)}).last().write();
+            db.get("users").push({name:req.body.name,password:md5(req.body.password),number:checkCode(serverData.value().number),class:[]}).last().write();
             serverData.assign({number:serverData.value().number+1}).write();
             res.status(200).send(""+checkCode(serverData.value().number-1));
         }
     }
 });
 
+app.get("/logout",(req,res) =>{
+    delete req.session.user;
+    res.redirect(302,"/");
+})
 app.listen(3000,function(){
     console.log("server start");
 });
