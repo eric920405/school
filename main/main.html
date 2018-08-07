@@ -6,8 +6,17 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
         crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        /*#class li{
+            width:100vw;
+            height:30px;
+            background-color:#f0ff84;
+            border-color:gray;
+            border-width:thin;
+        }*/
+    </style>
 </head>
 
 <body style="font-family:Microsoft JhengHei;;background-color:#F5F5BC">
@@ -61,7 +70,7 @@
             </div>
         </div>
     </nav>
-    <ul style="width:100vw" id="class">
+    <ul style="width:100vw;list-style-type:none;" id="class">
         
     </ul>
     <script>
@@ -70,7 +79,7 @@
             url:"/data-class",
             success:function(response){
                 for(var i = 0;i<response.length;i++){
-                    
+
                 }
             }
         })

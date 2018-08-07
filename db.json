@@ -3,14 +3,44 @@
     {
       "name": "a1",
       "password": "8a8bb7cd343aa2ad99b7d762030857a2",
-      "number": 30000000,
-      "class": []
+      "number": 30000003,
+      "class": [
+        {
+          "name": "test",
+          "code": "abcdef",
+          "id": "student"
+        }
+      ]
+    },
+    {
+      "name": "b1",
+      "password": "edbab45572c72a5d9440b40bcc0500c0",
+      "number": 30000010,
+      "class": [
+        {
+          "name": "test",
+          "code": "abcdef",
+          "id": "teacher"
+        }
+      ]
     }
   ],
   "server": [
     {
       "server": "server",
-      "number": 3000001
+      "number": 3000002
+    }
+  ],
+  "class": [
+    {
+      "name": "test",
+      "code": "abcdef",
+      "teacher": [
+        30000010
+      ],
+      "student": [
+        30000003
+      ]
     }
   ]
 }

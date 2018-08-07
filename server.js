@@ -8,7 +8,7 @@ const low = require("lowdb");
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
-db.defaults({ users: [] , server: []}).write();
+db.defaults({ users: [] , server: [] , class: []}).write();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
@@ -25,9 +25,22 @@ const checkCode = function(a){
     for(var i = 0;i<a.length;i++){
         a[i]*=1;
     }
-    return b*10+(a[0]*a[2]*a[4]*a[6]+a[1]+a[3]+a[5])%10;
+    return b*10+(a[0]*1+a[1]*2+a[2]*3+a[3]*4+a[4]*5+a[5]*6+a[6]*7)%10;
 }
 
+const classCode = function(){
+    var all = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+    while(true){
+        var code = "";
+        for(var i = 0;i<6;i++){
+            code += all.charAt(Math.floor(Math.random()*48));
+        }
+        if(!db.get("class").find({code:code}).value()){
+            return code;
+            break;
+        }
+    }
+}
 app.get("/",function(req,res){
     if(req.session.user){
         res.status(200).sendFile(__dirname + "/main/main.html");
@@ -99,7 +112,8 @@ app.post("/create-account",function(req,res){
 app.get("/logout",(req,res) =>{
     delete req.session.user;
     res.redirect(302,"/");
-})
+});
+
 app.listen(3000,function(){
     console.log("server start");
 });
